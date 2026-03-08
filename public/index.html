@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comet Compass</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-noise"></div>
+
+  <div class="app-shell">
+    <header class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+
+      <div class="hero-inner">
+    <div class="top-brand-bar">
+  <div id="prototypeChip" class="brand-chip proximity-pop">
+  <img src="utd-emblem.png" class="brand-chip-logo" alt="UT Dallas Logo" />
+  <span>UT DALLAS NAVIGATION PROTOTYPE</span>
+</div>
+
+  <div id="nebulaChip" class="hero-status-pill proximity-pop">POWERED BY NEBULA API</div>
+</div>
+
+<div class="hero-main">
+  <div class="hero-copy">
+    <p class="eyebrow">UT DALLAS AR NAVIGATION</p>
+
+   <h1 id="cometTitle" class="proximity-pop">COMET COMPASS</h1>
+
+    <p class="hero-subtitle">
+      A camera-first campus guide that helps students find buildings, courses, and destinations with live sensor input and UTD-branded guidance.
+    </p>
+
+    <div class="hero-actions">
+      <button id="heroFindBtn" class="hero-action-primary">Launch Navigation</button>
+      <button id="heroCameraBtn" class="hero-action-secondary">Open Camera View</button>
+    </div>
+  </div>
+
+  <div class="hero-mascot-panel">
+    <div class="mascot-glow"></div>
+    <img src="temoc.png" class="temoc-hero" alt="Temoc Mascot" />
+  </div>
+</div>
+      </div>
+    </header>
+
+    <main class="main-layout">
+      <section class="control-card">
+        <div class="card-header">
+          <div>
+            <p class="section-kicker">CONTROL CENTER</p>
+            <h2>NAVIGATION CONSOLE</h2>
+          </div>
+          <div class="card-badge">LIVE</div>
+        </div>
+
+        <div class="temoc-assistant">
+          <img id="smallTemoc" src="temoc.png" class="temoc-small proximity-pop" alt="Temoc Assistant" />
+          <div>
+            <p class="temoc-title">TEMOC ASSISTANT</p>
+            <p class="temoc-text">Search a building or course, then use camera and compass for a live directional view.</p>
+          </div>
+        </div>
+
+        <div class="search-shell">
+          <input
+            id="queryInput"
+            type="text"
+            placeholder="Try ECSW, JSOM, SU, or CS 1337"
+          />
+          <button id="findBtn">Find Destination</button>
+        </div>
+
+        <div class="action-row">
+          <button id="cameraBtn">Start Camera</button>
+          <button id="sensorBtn">Enable Compass</button>
+        </div>
+
+        <div class="info-grid">
+          <div class="panel panel-status">
+            <div class="panel-top">
+              <h3>STATUS</h3>
+              <span class="panel-indicator"></span>
+            </div>
+            <div id="status" class="status-box">Waiting...</div>
+          </div>
+
+          <div class="panel panel-destination">
+            <div class="panel-top">
+              <h3>DESTINATION</h3>
+              <span class="panel-chip">UTD</span>
+            </div>
+            <div id="destinationBox" class="destination-box">No destination selected yet.</div>
+          </div>
+
+          <div class="panel map-panel">
+            <div class="panel-top">
+              <h3>MINI MAP</h3>
+              <span class="panel-chip">LIVE</span>
+            </div>
+
+            <div class="mini-map">
+              <div class="map-grid"></div>
+              <div class="map-glow"></div>
+
+              <div id="userDot" class="map-dot user-dot"></div>
+              <div id="destDot" class="map-dot dest-dot"></div>
+              <div id="mapLine" class="map-line"></div>
+
+              <div class="map-label map-label-you">YOU</div>
+              <div class="map-label map-label-dest">DEST</div>
+            </div>
+
+            <div id="mapMeta" class="map-meta">
+              Waiting for location and destination...
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="camera-card">
+        <div class="camera-card-header">
+          <div>
+            <p class="section-kicker">IMMERSIVE VIEW</p>
+            <h2>LIVE AR VIEW</h2>
+          </div>
+          <div class="camera-mode-pill">AR MODE</div>
+        </div>
+
+        <p class="camera-subtitle">
+          Point your phone in the direction you want to walk.
+        </p>
+
+        <div class="camera-wrap">
+          <video id="video" autoplay playsinline muted></video>
+
+          <div class="camera-top-fade"></div>
+          <div class="camera-bottom-fade"></div>
+          <div class="camera-side-glow"></div>
+
+          <div class="overlay">
+            <div class="hud-badge top-left">UTD LIVE</div>
+            <div class="hud-badge top-right">NAV ACTIVE</div>
+
+            <img src="utd-emblem.png" class="camera-watermark" alt="UTD Watermark" />
+
+            <div class="heading-ring"></div>
+
+            <div id="arrowCluster" class="arrow-cluster">
+              <div class="chevron chevron-1"></div>
+              <div class="chevron chevron-2"></div>
+              <div class="chevron chevron-3"></div>
+            </div>
+
+            <div class="reticle"></div>
+
+            <div class="path-pulses">
+              <div class="pulse pulse-1"></div>
+              <div class="pulse pulse-2"></div>
+              <div class="pulse pulse-3"></div>
+              <div class="pulse pulse-4"></div>
+            </div>
+
+            <div class="hud-corners">
+              <span class="corner tl"></span>
+              <span class="corner tr"></span>
+              <span class="corner bl"></span>
+              <span class="corner br"></span>
+            </div>
+
+            <div class="bottom-hud">
+              <div id="guidance" class="guidance">Point your phone around</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+
+  <script>
+    const heroFindBtn = document.getElementById("heroFindBtn");
+    const heroCameraBtn = document.getElementById("heroCameraBtn");
+    const mainFindBtn = document.getElementById("findBtn");
+    const mainCameraBtn = document.getElementById("cameraBtn");
+
+    if (heroFindBtn && mainFindBtn) {
+      heroFindBtn.addEventListener("click", () => mainFindBtn.click());
+    }
+
+    if (heroCameraBtn && mainCameraBtn) {
+      heroCameraBtn.addEventListener("click", () => mainCameraBtn.click());
+    }
+  </script>
+
+  <script>
+    const proximityItems = [
+      {
+        el: document.getElementById("cometTitle"),
+        className: "proximity-active-title",
+        radius: 240
+      },
+      {
+        el: document.getElementById("prototypeChip"),
+        className: "proximity-active-chip",
+        radius: 180
+      },
+      {
+        el: document.getElementById("nebulaChip"),
+        className: "proximity-active-chip",
+        radius: 180
+      },
+      {
+        el: document.getElementById("smallTemoc"),
+        className: "proximity-active-temoc-small",
+        radius: 140
+      }
+    ];
+
+    function distanceToElementCenter(el, mouseX, mouseY) {
+      const rect = el.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const dx = mouseX - centerX;
+      const dy = mouseY - centerY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    window.addEventListener("mousemove", (event) => {
+      proximityItems.forEach((item) => {
+        if (!item.el) return;
+
+        const dist = distanceToElementCenter(item.el, event.clientX, event.clientY);
+
+        if (dist < item.radius) {
+          item.el.classList.add(item.className);
+        } else {
+          item.el.classList.remove(item.className);
+        }
+      });
+    });
+
+    window.addEventListener("mouseleave", () => {
+      proximityItems.forEach((item) => {
+        if (!item.el) return;
+        item.el.classList.remove(item.className);
+      });
+    });
+  </script>
+</body>
+</html>
